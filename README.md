@@ -2,8 +2,7 @@
 [![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=19195625)
 # SESION DE LABORATORIO N° 03: Visualización de Datos con PowerBI
 
-### Nombre:
-  Brian Danilo Chite Quispe
+### Nombre:  Brian Danilo Chite Quispe
 ## OBJETIVOS
   * Comprender la organización la información de nuestros datos de tal manera que todos los que los vean 
 puedan comprender sus implicaciones y cómo actuar sobre ellos con claridad.
@@ -303,6 +302,7 @@ TargetSales = SUM('Sales'[LineTotal]) * 1.2
 ---
 ## Actividades
 1. Crear la infraestructura para una base de datos Azure SQL utilizando Terraform, en la ruta infra/main.tf.
+   ![image](imagenes/imagen1.png)
 2. Construir una automatización en github actions (.github/workflows/bd.yml) que despliegue la infraestructura de base de datos utilizando Terraform y una herramienta para ejecutar la restauracion de la base de datos (Powershell, Liquibase u otro)
 3. Conectar el dashboard con la base de datos, subir la captura de la conexion en el archivo conexion.png
 4. Construir una automatizacion que despliegue el Dashboard de PowerBI en su espacio (.github/workflows/publish_dashboard.yml), puede utilizar un actión como este https://github.com/marketplace/actions/power-bi-pipeline-deploy o similar.
