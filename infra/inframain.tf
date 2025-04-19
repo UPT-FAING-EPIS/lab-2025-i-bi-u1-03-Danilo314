@@ -1,25 +1,23 @@
-# infra/main.tf
-
 provider "azurerm" {
   features {}
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-database-demo"
+  name     = "rg-db"
   location = "East US"
 }
 
 resource "azurerm_sql_server" "sqlserver" {
-  name                         = "sqlserverdemotf"
+  name                         = "sqlserverdemo"
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
-  administrator_login          = "sqladminuser"
-  administrator_login_password = "P@ssword1234"
+  administrator_login          = "adminuser"
+  administrator_login_password = "StrongP@ss123"
 }
 
 resource "azurerm_sql_database" "sqldb" {
-  name                = "sqldbdemo"
+  name                = "mydb"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   server_name         = azurerm_sql_server.sqlserver.name
