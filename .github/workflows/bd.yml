@@ -1,6 +1,9 @@
 name: Deploy Azure SQL Infra and Restore DB
 
 on:
+  workflow_dispatch:  # Esto permite ejecutar manualmente
+
+on:
   push:
     branches:
       - main
