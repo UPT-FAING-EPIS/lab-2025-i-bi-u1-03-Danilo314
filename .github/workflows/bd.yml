@@ -1,10 +1,8 @@
 name: Deploy Azure SQL Infra and Restore DB
 
 on:
-  workflow_dispatch:  # Esto permite ejecutar manualmente
-
-on:
-  push:
+  workflow_dispatch:  # Permite ejecutar manualmente el workflow desde la interfaz
+  push:               # Ejecuta automáticamente cuando hay un push a la rama main
     branches:
       - main
 
@@ -51,6 +49,6 @@ jobs:
           $dbName = "demo-db"
           $username = "sqladminuser"
           $password = "YourP@ssw0rd123"
-          $backupFile = "restore.sql"  # Asegúrate de tener este archivo en el repo
+          $backupFile = "restore.sql"  # Asegúrate de que este archivo exista en el repo
 
           Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Username $username -Password $password -InputFile $backupFile
