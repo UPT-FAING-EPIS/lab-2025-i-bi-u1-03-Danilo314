@@ -304,5 +304,6 @@ TargetSales = SUM('Sales'[LineTotal]) * 1.2
 1. Crear la infraestructura para una base de datos Azure SQL utilizando Terraform, en la ruta infra/main.tf.
    ![image](imagenes/imagen1.png)
 2. Construir una automatización en github actions (.github/workflows/bd.yml) que despliegue la infraestructura de base de datos utilizando Terraform y una herramienta para ejecutar la restauracion de la base de datos (Powershell, Liquibase u otro)
+   ![image](imagenes/imagen2.png)
 3. Conectar el dashboard con la base de datos, subir la captura de la conexion en el archivo conexion.png
 4. Construir una automatizacion que despliegue el Dashboard de PowerBI en su espacio (.github/workflows/publish_dashboard.yml), puede utilizar un actión como este https://github.com/marketplace/actions/power-bi-pipeline-deploy o similar.
