@@ -49,6 +49,6 @@ jobs:
           $dbName = "demo-db"
           $username = "sqladminuser"
           $password = "YourP@ssw0rd123"
-          $backupFile = "restore.sql"  # Asegúrate de que este archivo exista en el repo
+          $backupFile = "restore.sql"
 
           Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Username $username -Password $password -InputFile $backupFile
