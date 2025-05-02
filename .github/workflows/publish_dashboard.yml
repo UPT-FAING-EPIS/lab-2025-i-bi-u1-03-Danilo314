@@ -3,22 +3,28 @@ name: Deploy Power BI Dashboard
 on:
   push:
     branches:
-      - main  # o la rama que utilices
+      - main
 
 jobs:
-  deploy-dashboard:
+  deploy-powerbi:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v3
 
-      - name: Deploy to Power BI pipeline
-        uses: microsoft/powerbi-pipeline-deploy@v1
-        with:
-          client-id: ${{ secrets.PBI_CLIENT_ID }}
-          client-secret: ${{ secrets.PBI_CLIENT_SECRET }}
-          tenant-id: ${{ secrets.PBI_TENANT_ID }}
-          workspace-id: ${{ secrets.PBI_WORKSPACE_ID }}
-          pipeline-id: ${{ secrets.PBI_PIPELINE_ID }}
-          stage-order: 2  # Número de orden del stage (por ejemplo: Desarrollo=1, Producción=2)
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Install Azure CLI
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+    - name: Upload PBIX via API
+      run: |
+        curl -X POST "https://api.powerbi.com/v1.0/myorg/groups/${{ secrets.PBI_WORKSPACE_ID }}/imports?datasetDisplayName=lab03-DylanTapia" \
+          -H "Authorization: Bearer $(az account get-access-token --resource https://analysis.windows.net/powerbi/api --query accessToken -o tsv)" \
+          -H "Content-Type: multipart/form-data" \
+          -F "file=@lab03-DylanTapia.pbix"
