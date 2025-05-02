@@ -1,54 +1,32 @@
-name: Deploy Azure SQL Infra and Restore DB
+name: Deploy Database
 
 on:
-  workflow_dispatch:  # Permite ejecutar manualmente el workflow desde la interfaz
-  push:               # Ejecuta automáticamente cuando hay un push a la rama main
-    branches:
-      - main
+  push:
+    paths:
+      - 'infra/**'
+      - 'bd.sql'
+      - '.github/workflows/bd.yml'
 
 jobs:
-  terraform:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout código
-        uses: actions/checkout@v3
-
-      - name: Configurar Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Instalar Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Inicializar Terraform
-        run: terraform init
-        working-directory: infra
-
-      - name: Validar Terraform
-        run: terraform validate
-        working-directory: infra
-
-      - name: Aplicar Terraform
-        run: terraform apply -auto-approve
-        working-directory: infra
-
-  restore-db:
+  deploy-db:
     runs-on: windows-latest
-    needs: terraform
+
+    env:
+      TF_IN_AUTOMATION: true
 
     steps:
-      - name: Checkout código
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Restaurar Base de Datos con PowerShell
-        shell: pwsh
-        run: |
-          $serverName = "sqlserverdemo123.database.windows.net"
-          $dbName = "demo-db"
-          $username = "sqladminuser"
-          $password = "YourP@ssw0rd123"
-          $backupFile = "restore.sql"
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
 
-          Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Username $username -Password $password -InputFile $backupFile
+      - name: Terraform Init
+        working-directory: infra
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: infra
+        run: terraform apply -auto-approve
