@@ -4,3 +4,7 @@ client_secret     = "8sp8Q~nh9XA50cN2nQIItmU3ygcamuz4S03Wcbdx"
 tenant_id         = "b6b466ee-468d-4011-b9fc-fbdcf82ac90a"
 sqladmin_username = "danilo"
 sqladmin_password = "P@ssw0rd123!"
+
+
+
+
